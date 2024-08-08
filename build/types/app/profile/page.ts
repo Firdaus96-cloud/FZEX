@@ -1,4 +1,4 @@
-// File: /home/uumparcelcentre.com.my/firdausfauzi/src/app/profile/page.js
+// File: /Users/firdaus96/Downloads/fzex/src/app/profile/page.js
 import * as entry from '../../../../src/app/profile/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

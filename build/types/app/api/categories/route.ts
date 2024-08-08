@@ -1,4 +1,4 @@
-// File: /home/uumparcelcentre.com.my/firdausfauzi/src/app/api/categories/route.js
+// File: /Users/firdaus96/Downloads/fzex/src/app/api/categories/route.js
 import * as entry from '../../../../../src/app/api/categories/route.js'
 import type { NextRequest } from 'next/server.js'
 

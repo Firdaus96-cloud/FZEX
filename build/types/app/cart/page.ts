@@ -1,4 +1,4 @@
-// File: /home/uumparcelcentre.com.my/firdausfauzi/src/app/cart/page.js
+// File: /Users/firdaus96/Downloads/fzex/src/app/cart/page.js
 import * as entry from '../../../../src/app/cart/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

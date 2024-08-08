@@ -37,7 +37,8 @@ export function AppProvider({children}) {
   function removeCartProduct(indexToRemove) {
     setCartProducts(prevCartProducts => {
       const newCartProducts = prevCartProducts
-        .filter((v,index) => index !== indexToRemove);
+        .filter((v,_id) => _id !== indexToRemove);
+        console.log(newCartProducts);
       saveCartProductsToLocalStorage(newCartProducts);
       return newCartProducts;
     });

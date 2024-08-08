@@ -12,15 +12,15 @@ export default function EditableImage({link, setLink}) {
       const uploadPromise = fetch('/api/upload', {
         method: 'POST',
         body: data,
-      }).then(response => {
-		 console.log(response.json());
-        if (response.ok) {
-			
-          return response.json().then(link => {
-            setLink(link);
-          })
+      }).then(response => response.json())
+      .then(result => {
+        console.log(result); // Should log the resolved JSON object
+        // Process the result as needed
+        if (result.status === "success") {
+          setLink(result.link);
+        } else {
+          console.error("Failed to get the link.");
         }
-        throw new Error('Something went wrong');
       });
 
       await toast.promise(uploadPromise, {

@@ -3,6 +3,7 @@
 const nextConfig = {
   transpilePackages: ['react-hook-mousetrap'],
   images: {
+    domains: ['localhost'],
     remotePatterns: [
       {
         protocol: 'https',

@@ -1,41 +1,25 @@
-import {PutObjectCommand, S3Client} from "@aws-sdk/client-s3";
-import uniqid from 'uniqid';
+import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
+import fs from "node:fs/promises";
 
 export async function POST(req) {
-  const data =  await req.formData();
-  if (data.get('file')) {
-    // upload the file
-    const file = data.get('file');
+  try {
+    const formData = await req.formData();
 
-    const s3Client = new S3Client({
-      region: 'us-east-1',
-      credentials: {
-        accessKeyId: process.env.MY_AWS_ACCESS_KEY,
-        secretAccessKey: process.env.MY_AWS_SECRET_KEY,
-      },
-    });
+    const file = formData.get("file");
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = new Uint8Array(arrayBuffer);
 
-    const ext = file.name.split('.').slice(-1)[0];
-    const newFileName = uniqid() + '.' + ext;
+    await fs.mkdir('./public/uploads', { recursive: true });
+    const link = `./public/uploads/${file.name}`;
+    await fs.writeFile(link, buffer);
+    const newNamePath = `/uploads/${file.name}`;
 
-    const chunks = [];
-    for await (const chunk of file.stream()) {
-      chunks.push(chunk);
-    }
-    const buffer = Buffer.concat(chunks);
+    revalidatePath("/");
 
-    const bucket = 'dawid-food-ordering';
-    await s3Client.send(new PutObjectCommand({
-      Bucket: bucket,
-      Key: newFileName,
-      ACL: 'public-read',
-      ContentType: file.type,
-      Body: buffer,
-    }));
-
-
-    const link = 'https://'+bucket+'.s3.amazonaws.com/'+newFileName;
-    return Response.json(link);
+    return NextResponse.json({ status: "success", link: newNamePath });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ status: "fail", error: e });
   }
-  return Response.json(true);
 }
